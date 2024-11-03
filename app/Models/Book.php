@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\BookLanguage;
+use App\Enums\BookStatus;
 
 class Book extends Model
 {
