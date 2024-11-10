@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\ReturnBookStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ReturnBook extends Model
 {
@@ -21,5 +23,25 @@ class ReturnBook extends Model
             'return_date' => 'date',
             'satatus' => ReturnBookStatus::class,
         ];
+    }
+
+    public function loan(): BelongsTo
+    {
+        return $this->belongsTo(related: Loan::class);
+    }
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(related: Book::class);
+    }
+
+    public function fine():HasOne
+    {
+        return $this->hasOne(related: Fine::class);
+    }
+
+    public function returnBookCheck(): HasOne
+    {
+        return $this->hasOne(related: ReturnBookCheck::class);
     }
 }

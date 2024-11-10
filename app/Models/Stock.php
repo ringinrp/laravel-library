@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Stock extends Model
+
 {
     protected $fillable = [
         'book_id',
@@ -14,4 +16,9 @@ class Stock extends Model
         'lost',
         'damaged'
     ];
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(related: Book::class);
+    }
 }

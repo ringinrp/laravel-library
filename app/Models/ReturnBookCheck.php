@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ReturnBookCondition;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ReturnBookCheck extends Model
 {
@@ -17,5 +18,10 @@ class ReturnBookCheck extends Model
         return [
             'condition' => ReturnBookCondition::class,
         ];
+    }
+
+    public function returnBook():BelongsTo
+    {
+        return $this->belongsTo(related: ReturnBook::class);
     }
 }
