@@ -19,7 +19,7 @@ class PublisherFactory extends Factory
         return [
             'name' => $name = $this->faker->company(),
             'slug' => str()->lower(str()->slug($name). str()->random(4)),
-            'addresss' => $this->faker->address(),
+            'address' => $this->faker->address(),
             'email' => $this->faker->unique()->email(),
             'phone' => $this->faker->phoneNumber(),
         ];
