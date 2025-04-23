@@ -15,7 +15,7 @@ enum BookStatus: string
     {
         return collect(self::cases())->map(fn($item) => [
             'value' => $item->value,
-            'label' => $item->name,
+            'label' => $item->name, //label menggunakan name : Ketika value terlalu teknis atau tidak cocok untuk ditampilkan langsung kepada pengguna, sehingga dibutuhkan representasi tambahan yang lebih ramah pembaca.
         ])->values()->toArray();
     }
 }
