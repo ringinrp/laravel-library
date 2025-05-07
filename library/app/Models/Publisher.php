@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Publisher extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
@@ -14,4 +18,9 @@ class Publisher extends Model
         'address',
         'phone',
     ];
+
+    public  function books(): HasMany
+    {
+        return $this->hasMany(Book::class);  // penerbit dapat memiliki banyak buku
+    }
 }
