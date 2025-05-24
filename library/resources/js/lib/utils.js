@@ -25,3 +25,36 @@ export const formatToRupiah = (amount) =>{
     })
     return formatter.format(amount);
 }
+
+export const messages ={
+    503 : {
+        title: "Service Unavailable",
+        description: "Sorry, we are doing some maintenance. Please check back later.",
+        status: '503'
+    },
+    500 : {
+        title: "Server Error",
+        description: "Oops, something went wrong. Please try again later.",
+        status: '500'
+    },
+    404 : {
+        title: "Not Found",
+        description: "Sorry,the page you are looking for could not be found.",
+        status: '404'
+    },
+    403 : {
+        title: "Forbidden",
+        description: "Sorry, you are not authorized to access this page.",
+        status: '403'
+    },
+    401 : {
+        title: "Authorization",
+        description: "Sorry, you are not authorized to access this page.",
+        status: '401'
+    },
+    429 : {
+        title: "Too Many Requests",
+        description: "Please try again in just a minute.",
+        status: '429'
+    },
+}
