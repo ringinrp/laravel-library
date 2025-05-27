@@ -7,10 +7,15 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/Components/ui/sheet';
 import { Toaster } from '@/Components/ui/toaster';
-import { Head, Link } from '@inertiajs/react';
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import { Head } from '@inertiajs/react';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { IconLayoutSidebar } from '@tabler/icons-react';
+import Sidebar from './partials/Sidebar';
+import SidebarResponsive from './partials/SidebarResponsive';
 
 export default function AppLayout({ title, children }) {
     return (
@@ -23,16 +28,37 @@ export default function AppLayout({ title, children }) {
                     <div className="flex flex-col h-full  min-h-screen gap-2">
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                             <ApplicationLogo />
-                            {/* <p>test</p> */}
                         </div>
 
-                        <div className="flex-1 ">{/* sidebar */}</div>
+                        <div className="flex-1 ">
+                            {/* sidebar */}
+                            <Sidebar />
+                        </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col w-full lg:w-4/5">
                     <header className="flex h-12 items-center justify-between gap-4 border-b px-4 lg:h-[60px] lg:justify-end lg:px-6">
                         {/* sidebar responsive */}
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+                                    <IconLayoutSidebar className="h-5 w-5" />
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent side="left" className="flex flex-col max-h-screen overflow-y-auto">
+                                <SheetHeader>
+                                    <SheetTitle>
+                                        <VisuallyHidden.Root>Sidebar Responsive</VisuallyHidden.Root>
+                                    </SheetTitle>
+                                    <SheetDescription>
+                                        <VisuallyHidden.Root>Sidebar Responsive</VisuallyHidden.Root>
+                                    </SheetDescription>
+                                </SheetHeader>
+                                {/* Responsive sidebar menu */}
+                                <SidebarResponsive />
+                            </SheetContent>
+                        </Sheet>
 
                         {/* dropdown */}
                         <DropdownMenu>
@@ -49,7 +75,7 @@ export default function AppLayout({ title, children }) {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>Profile</DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="#">Logout</Link>
+                                    <a href="#">Logout</a>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
