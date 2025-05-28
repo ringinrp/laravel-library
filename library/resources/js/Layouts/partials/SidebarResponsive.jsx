@@ -22,7 +22,7 @@ import {
     IconVersions,
 } from '@tabler/icons-react';
 
-export default function SidebarResponsive() {
+export default function SidebarResponsive({url,auth}) {
     return (
         <nav className="grid gap-6 text-lg font-medium">
             <ApplicationLogo />
@@ -30,7 +30,7 @@ export default function SidebarResponsive() {
             <nav className="grid items-start text-sm font-semibold lg:px-4">
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Dashboard</div>
 
-                <NavLinkResponsive href="#" title="Dashboard" icon={IconDashboard} />
+                <NavLinkResponsive href="/dashboard" active={url.startsWith('/dashboard')} title="Dashboard" icon={IconDashboard} />
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Statistik</div>
 
                 <NavLinkResponsive href="#" title="Statistik Peminjaman" icon={IconChartDots2} />
@@ -58,7 +58,7 @@ export default function SidebarResponsive() {
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
                 <NavLinkResponsive href="#" title="Pengumuman" icon={IconAlertCircle} />
                 <NavLinkResponsive href={route('profile.edit')} title="Profile" icon={IconUser} />
-                <NavLinkResponsive href="#" title="Logout" icon={IconLogout} />
+                <NavLinkResponsive href={route('logout')} title="Logout" icon={IconLogout} method='post' as='button' className="w-full" />
             </nav>
         </nav>
     );
