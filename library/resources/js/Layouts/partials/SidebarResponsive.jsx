@@ -23,6 +23,7 @@ import {
 } from '@tabler/icons-react';
 
 export default function SidebarResponsive({ url, auth }) {
+    
     return (
         <nav className="grid gap-6 text-lg font-medium">
             <ApplicationLogo />
@@ -31,10 +32,7 @@ export default function SidebarResponsive({ url, auth }) {
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Dashboard</div>
 
                 <NavLinkResponsive
-                    href="/dashboard"
-                    active={url.startsWith('/dashboard')}
-                    title="Dashboard"
-                    icon={IconDashboard}
+                    url={route('dashboard')} active={url.startsWith('/dashboard')} title="Dashboard" icon={IconDashboard}
                 />
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Statistik</div>
 
@@ -43,9 +41,9 @@ export default function SidebarResponsive({ url, auth }) {
                 <NavLinkResponsive href="#" title="Laporan Stok Buku" icon={IconStack3} />
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Master</div>
-                <NavLinkResponsive href="#" title="Kategori" icon={IconCategory} />
+                <NavLinkResponsive url={route('admin.categories.index')} active={url.startsWith('/admin/categories')} title="Kategori" icon={IconCategory} />
                 <NavLinkResponsive href="#" title="Penerbit" icon={IconBuildingCommunity} />
-                <NavLinkResponsive href="#" title="Buku" icon={IconBooks} />
+                <NavLinkResponsive href="#" title="Buk\u" icon={IconBooks} />
                 <NavLinkResponsive href="#" title="Pengguna" icon={IconUsersGroup} />
                 <NavLinkResponsive href="#" title="Pengaturan Denda" icon={IconSettingsExclamation} />
 
@@ -64,10 +62,10 @@ export default function SidebarResponsive({ url, auth }) {
                 <NavLinkResponsive href="#" title="Pengumuman" icon={IconAlertCircle} />
                 <NavLinkResponsive href={route('profile.edit')} title="Profile" icon={IconUser} />
                 <NavLinkResponsive
-                    href={route('logout')}
+                    url={route('logout')}
                     title="Logout"
                     icon={IconLogout}
-                    method="post"
+                    method="POST"
                     as="button"
                     className="w-full"
                 />
