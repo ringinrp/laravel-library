@@ -7,7 +7,7 @@ export function cn(...inputs) {
 
 export const FINEPAYMENTSTATUS = {
     PENDING: 'Tertunda',
-    SUCCESS: 'Sukses',
+    SUCCESS: 'Berhasil',
     FAILED: 'Gagal',
 };
 
@@ -27,33 +27,33 @@ export const formatToRupiah = (amount) => {
 
 export const messages = {
     503: {
-        title: 'Service Unavailable',
-        description: 'Sorry, we are doing some maintenance. Please check back later.',
+        title: 'Service Unavible',
+        description: 'Sorry, we are doing maintenance. Please check back soon',
         status: '503',
     },
     500: {
         title: 'Server Error',
-        description: 'Oops, something went wrong. Please try again later.',
+        description: 'Oops, Something went Wrong on our servers',
         status: '500',
     },
     404: {
         title: 'Not Found',
-        description: 'Sorry,the page you are looking for could not be found.',
+        description: 'Sorry, the page you are looking for could not be found',
         status: '404',
     },
     403: {
         title: 'Forbidden',
-        description: 'Sorry, you are not authorized to access this page.',
+        description: 'Sorry, you are forbidden from accessing this page',
         status: '403',
     },
     401: {
-        title: 'Authorization',
-        description: 'Sorry, you are not authorized to access this page.',
+        title: 'Unauthorized',
+        description: 'Sorry, you are unauthorized to access this page',
         status: '401',
     },
     429: {
-        title: 'Too Many Requests',
-        description: 'Please try again in just a minute.',
+        title: 'To Many Request',
+        description: 'Please try again in just a second',
         status: '429',
     },
 };
