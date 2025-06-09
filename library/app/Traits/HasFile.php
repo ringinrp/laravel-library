@@ -2,39 +2,35 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-trait hasFile
+trait Hasfile
 {
-    public function upload_file(Request $request, string $column, string $folder): ?string
+    public function upload_file(Request $request, string $colomn, string $folder): ?string
     {
-        return $request->hasfile($column) ? $request->file($column)->store($folder) ?: null;
+        return $request->hasfile($colomn) ? $request->file($colomn)->store($folder) : null;
     }
 
-    public function update_file(Request $request, Model $model, string $column, string $folder): ?string
+    public function update_file(Request $request, Model $model, string $colomn, string $folder): ?string
     {
-        if ($request->hasfile($column)) {
-            if ($model->$column) {
-                Storage::delete($model->$column);
+        if ($request->hasFile($colomn)) {
+            if ($model->$colomn) {
+                Storage::delete($model->$colomn);
             }
+            $thumbnail = $request->file($colomn)->store($folder);
+        } else {
+            $thumbnail = $model->$colomn;
+        }
 
-            $thumbnail = $request->file($column)->store($folder);
-
-            }else{
-            $thumbnail = $model->$column;
-            }
-
-            return $thumbnail;
-
+        return $thumbnail;
     }
 
-    public function delete_file(Model $model, string $column): void
+    public function delete_file(Model $model, string $colomn): void
     {
-        if ($model->$column) {
-            Storage::delete($model->$column);
+        if ($model->colomn) {
+            Storage::delete($model->$colomn);
         }
     }
-
 }
-
