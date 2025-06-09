@@ -24,4 +24,16 @@ class CategoryController extends Controller
             ],
         ]);
     }
+
+    public function create(): Response
+    {
+        return inertia('Admin/Categories/Create', [
+            'page_settings' => [
+                'title' => 'Tambah Kategori',
+                'subtitle' => 'Buat Kategori baru di sini. Klik simpan setelah selesai',
+                'method' => 'POST',
+                'action' => route('admin.categories.store'),
+            ],
+        ]);
+    }
 }
