@@ -12,12 +12,12 @@ import { IconArrowLeft, IconCategory } from '@tabler/icons-react';
 import { useRef } from 'react';
 import { toast } from 'sonner'; // Ensure you have this import
 
-export default function Create(props) {
+export default function Edit(props) {
     const fileInputCover = useRef(null);
 
     const { data, setData, reset, post, processing, errors } = useForm({
-        name: '',
-        description: '',
+        name: props.category.name ?? '',
+        description: props.category.description ?? '',
         cover: null,
         _method: props.page_settings.method,
     });
@@ -111,4 +111,4 @@ export default function Create(props) {
     );
 }
 
-Create.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title} />;
+Edit.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title} />;

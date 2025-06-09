@@ -15,8 +15,10 @@ import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import AppLayout from '@/Layouts/AppLayout'; // Adjust the path as needed
-import { Link } from '@inertiajs/react';
+import { flashMessage } from '@/lib/utils';
+import { Link, router } from '@inertiajs/react';
 import { IconCategory, IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
+import { toast } from 'sonner';
 
 export default function Index(props) {
     return (
@@ -55,7 +57,7 @@ export default function Index(props) {
                                     <TableCell>{category.slug}</TableCell>
                                     <TableCell>
                                         <Avatar>
-                                            <AvatarImage src={category.avatar} />
+                                            <AvatarImage src={category.cover} />
                                             <AvatarFallback>{category.name.substring(0, 1)}</AvatarFallback>
                                         </Avatar>
                                     </TableCell>
@@ -63,7 +65,7 @@ export default function Index(props) {
                                     <TableCell>
                                         <div className="flex items-center gap-x-1">
                                             <Button variant="blue" size="sm" asChild>
-                                                <Link href={route('admin.categories.edit', [category.id])}>
+                                                <Link href={route('admin.categories.edit', [category.id])} preserveState={false}>
                                                     <IconPencil className="size-4" />
                                                 </Link>
                                             </Button>
@@ -86,7 +88,18 @@ export default function Index(props) {
                                                     <AlertDialogFooter>
                                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                                                         <AlertDialogAction
-                                                            onClick={() => console.log('Hapus Kategori')}
+                                                            onClick={() => 
+                                                                router.delete(route('admin.categories.destroy', [category.id]),{
+                                                                    preserveScroll: true,
+                                                                    preserveState: true,
+                                                                    onSuccess: (success) => {
+                                                                        // const flash = flashMessage(success);
+                                                                        // if (flash) toast[flash.type](flash.message); 
+                                                                        toast.success('Kategori berhasil dihapus');
+                                                                        router.reload(); 
+                                                                    }
+                                                                })
+                                                            }
                                                         >
                                                             Continue
                                                         </AlertDialogAction>
