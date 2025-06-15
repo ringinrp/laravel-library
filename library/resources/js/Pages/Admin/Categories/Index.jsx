@@ -12,17 +12,36 @@ import {
 } from '@/Components/ui/alert-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
-import { Card, CardContent, CardFooter } from '@/Components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/Components/ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
+import { UseFilter } from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout'; // Adjust the path as needed
 import { flashMessage } from '@/lib/utils';
 import { Link, router } from '@inertiajs/react';
-import { IconCategory, IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
+import { IconArrowsDownUp, IconCategory, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Index(props) {
     const {data: categories, meta}  = props.categories;
+    const [params, setParams] = useState(props.state);
+
+    const onSortable = (field) => {
+        setParams({
+            ...params,
+            field: field,
+            direction: params.direction == 'asc' ? 'desc' : 'asc',
+        });
+    };
+
+    UseFilter({
+        route: route('admin.categories.index'),
+        values: params,
+        only: ['categories'],
+    });
 
     return (
         <div className="flex flex-col w-full pb-32">
@@ -40,15 +59,73 @@ export default function Index(props) {
             </div>
 
             <Card className="px-0 py-0 [&-td]:whitespace-nowrap [&_td]:px-6 [&_th]:px-6">
+                <CardHeader>
+                    <div className='flex w-full flex-col gap-4 lg:flex-row lg:items-center'>
+                    <Input
+                            className="w-full sm:w-1/4"
+                            placeholder="Search..."
+                            value={params?.search}
+                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value }))}
+                        />
+                         <Select value={params?.load} onValueChange={(e) => setParams({ ...params, load: e })}>
+                            <SelectTrigger className="w-full sm:w-24">
+                                <SelectValue placeholder="Load" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {[10, 25, 50, 75, 100].map((number, index) => (
+                                    <SelectItem key={index} value={number}>
+                                        {number}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <Button
+                        variant="orange"
+                        onClick={() => setParams(props.state)}
+                        size="xl"
+                        >
+                            <IconRefresh />
+                            Reload
+                        </Button>
+                    </div>
+                </CardHeader>
                 <CardContent>
                     <Table className="w-full">
                         <TableHeader>
                             <TableRow>
-                                <TableHead>#</TableHead>
-                                <TableHead>Nama</TableHead>
-                                <TableHead>Slug</TableHead>
+                                <TableHead>
+                                    <Button variant="ghost" className="group inline-flex" onClick={() => onSortable('id')}>
+                                        #
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                <Button variant="ghost" className="group inline-flex" onClick={() => onSortable('name')}>
+                                        Nama
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button variant="ghost" className="group inline-flex" onClick={() => onSortable('slug')}>
+                                        Slug
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
                                 <TableHead>Cover</TableHead>
-                                <TableHead>Dibuat pada</TableHead>
+                                <TableHead>
+                                <Button variant="ghost" className="group inline-flex" onClick={() => onSortable('created_at')}>
+                                        Dibuat pada
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
                                 <TableHead>Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
