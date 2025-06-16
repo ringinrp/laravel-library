@@ -78,16 +78,10 @@ class CategoryController extends Controller
                 'cover' => $this->upload_file($request, 'cover', 'categories')
             ]);
 
-            // Use session()->flash() to store success message
-            session()->flash('message', MessageType::CREATED->message('Kategori'));
-            session()->flash('message_type', 'success');  // Optionally, define the message type
-
+            flashMessage(MessageType::CREATED->message('Kategori'));
             return to_route('admin.categories.index');
         } catch (Throwable $err) {
-            // Use session()->flash() to store error message
-            session()->flash('message', MessageType::ERROR->message('Gagal membuat kategori: ' . $err->getMessage()));
-            session()->flash('message_type', 'error');
-
+            flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
             return to_route('admin.categories.index');
         }
     }
@@ -115,10 +109,10 @@ class CategoryController extends Controller
                 'cover' => $this->update_file($request, $category, 'cover', 'categories')
             ]);
 
-            session()->flash('message', MessageType::UPDATED->message('Kategori'));
+            flashMessage(MessageType::UPDATED->message('Kategori'));
             return to_route('admin.categories.index');
         } catch (Throwable $err) {
-            session()->flash('message', MessageType::ERROR->message(error: $err->getMessage()), 'error');
+            flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
             return to_route('admin.categories.index');
         }
     }
@@ -129,10 +123,10 @@ class CategoryController extends Controller
             $this->delete_file($category, 'cover');
 
             $category->delete();
-            session()->flash('message', MessageType::DELETED->message('Kategori'));
+            flashMessage(MessageType::DELETED->message('Kategori'));
             return to_route('admin.categories.index');
         } catch (Throwable $err) {
-            session()->flash('message', MessageType::ERROR->message(error: $err->getMessage()), 'error');
+            flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
             return to_route('admin.categories.index');
         }
     }
