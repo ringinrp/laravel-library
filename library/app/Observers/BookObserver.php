@@ -15,17 +15,17 @@ class BookObserver
     }
 
     //custome sendiri
-    public function updated(Book $book): void
-    {
-        // Menghapus stok sebelumnya sebelum menambah data baru
-        $book->stock()->delete();
+    // public function updated(Book $book): void
+    // {
+    //     // Menghapus stok sebelumnya sebelum menambah data baru
+    //     $book->stock()->delete();
 
-        // Menambahkan stok baru setelah dihapus
-        $total = request()->total;
+    //     // Menambahkan stok baru setelah dihapus
+    //     $total = request()->total;
 
-        $book->stock()->create([
-            'total' => $total,
-            'available' => $total,
-        ]);
-    }
+    //     $book->stock()->create([
+    //         'total' => $total,
+    //         'available' => $total,
+    //     ]);
+    // }
 }
