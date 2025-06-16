@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum MessageType: string
 {
-    case CREATED = 'Berhasil menambahkan';
-    case UPDATED = 'Berhasil memperbarui';
-    case DELETED = 'Berhasil menghapus';
+    case CREATED = 'Berhasil Menambahkan';
+    case UPDATED = 'Berhasil Memperbarui';
+    case DELETED = 'Berhasil Menghapus';
     case ERROR = 'Terjadi kesalahan. silakan coba lagi';
 
     public function message(string $entity = '', ?string $error = null): string
