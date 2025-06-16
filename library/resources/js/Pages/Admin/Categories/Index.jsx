@@ -65,7 +65,7 @@ export default function Index(props) {
                             className="w-full sm:w-1/4"
                             placeholder="Search..."
                             value={params?.search}
-                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value }))}
+                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value, page : 1 }))}
                         />
                          <Select value={params?.load} onValueChange={(e) => setParams({ ...params, load: e })}>
                             <SelectTrigger className="w-full sm:w-24">
@@ -173,10 +173,10 @@ export default function Index(props) {
                                                                     preserveScroll: true,
                                                                     preserveState: true,
                                                                     onSuccess: (success) => {
-                                                                        // const flash = flashMessage(success);
-                                                                        // if (flash) toast[flash.type](flash.message);
-                                                                        toast.success('Kategori berhasil dihapus');
-                                                                        router.reload();
+                                                                        const flash = flashMessage(success);
+                                                                        if (flash) toast[flash.type](flash.message);
+                                                                        // toast.success('Kategori berhasil dihapus');
+                                                                        // router.reload();
                                                                     }
                                                                 })
                                                             }
