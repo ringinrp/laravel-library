@@ -2,8 +2,8 @@
 
 use App\Models\User;
 
-if (!function_exists('fleshMessage')) {
-    function fleshMessage($message, $type = 'success'): void
+if (!function_exists('flashMessage')) {
+    function flashMessage($message, $type = 'success'): void
     {
         session()->flash('message', $message);
         session()->flash('type', $type);
@@ -27,7 +27,7 @@ if (!function_exists('usernameGenerator')) {
 }
 
 if (!function_exists('signatureMidtrans')) {
-    function signatureMidtrans($order_id, $status_code, $gross_amount, $server_key): string
+    function signatureMidtrans($order_id, $status_code, $gross_amount, $server_key)
     {
         return hash('sha512', $order_id . $status_code . $gross_amount . $server_key);
     }
