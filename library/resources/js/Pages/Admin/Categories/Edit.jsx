@@ -6,7 +6,7 @@ import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Textarea } from '@/Components/ui/textarea';
 import AppLayout from '@/Layouts/AppLayout';
-import { flashMessage } from '@/lib/utils';  // Importing the flashMessage function
+import { flashMessage } from '@/lib/utils'; // Importing the flashMessage function
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCategory } from '@tabler/icons-react';
 import { useRef } from 'react';

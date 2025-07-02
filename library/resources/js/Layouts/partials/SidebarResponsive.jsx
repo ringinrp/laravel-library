@@ -49,12 +49,26 @@ export default function SidebarResponsive({ url, auth }) {
                     title="Kategori"
                     icon={IconCategory}
                 />
-                <NavLinkResponsive url={route('admin.publishers.index')}
-                active={url.startsWith('/admin/publishers')}  title="Penerbit" icon={IconBuildingCommunity} />
-                <NavLinkResponsive url={route('admin.books.index')}
-                active={url.startsWith('/admin/books')} title="Buku" icon={IconBooks} />
-                <NavLinkResponsive href="#" title="Pengguna" icon={IconUsersGroup} />
-                <NavLinkResponsive href="#" title="Pengaturan Denda" icon={IconSettingsExclamation} />
+                <NavLinkResponsive
+                    url={route('admin.publishers.index')}
+                    active={url.startsWith('/admin/publishers')}
+                    title="Penerbit"
+                    icon={IconBuildingCommunity}
+                />
+                <NavLinkResponsive
+                    url={route('admin.books.index')}
+                    active={url.startsWith('/admin/books')}
+                    title="Buku"
+                    icon={IconBooks}
+                />
+                <NavLinkResponsive url={route('admin.users.index')}
+                                    active={url.startsWith('/admin/users')}
+                                    title="Pengguna"
+                                    icon={IconUsersGroup} />
+                <NavLinkResponsive url={route('admin.fine-settings.create')}
+                        active={url.startsWith('/admin/fine-settings')}
+                        title="Pengaturan Denda"
+                        icon={IconSettingsExclamation} />
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Peran dan Izin</div>
                 <NavLinkResponsive href="#" title="Peran" icon={IconCircleKey} />
@@ -64,8 +78,10 @@ export default function SidebarResponsive({ url, auth }) {
                 <NavLinkResponsive href="#" title="Akses Rute" icon={IconRoute} />
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Transaksi</div>
-                <NavLinkResponsive href="#" title="Peminjaman" icon={IconCreditCardPay} />
-                <NavLinkResponsive href="#" title="Pengembalian" icon={IconCreditCardRefund} />
+                <NavLinkResponsive url={route('admin.loans.index')}
+                                    active={url.startsWith('/admin/loans')} title="Peminjaman" icon={IconCreditCardPay} />
+                <NavLinkResponsive url={route('admin.return-books.index')}
+                                    active={url.startsWith('/admin/return-book')} title="Pengembalian" icon={IconCreditCardRefund} />
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
                 <NavLinkResponsive href="#" title="Pengumuman" icon={IconAlertCircle} />

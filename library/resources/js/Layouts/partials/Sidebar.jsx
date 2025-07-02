@@ -45,12 +45,26 @@ export default function Sidebar({ url, auth }) {
                 title="Kategori"
                 icon={IconCategory}
             />
-            <NavLink url={route('admin.publishers.index')}
-                active={url.startsWith('/admin/publishers')} title="Penerbit" icon={IconBuildingCommunity} />
-            <NavLink url={route('admin.books.index')}
-                active={url.startsWith('/admin/books')} title="Buku" icon={IconBooks} />
-            <NavLink href="#" title="Pengguna" icon={IconUsersGroup} />
-            <NavLink href="#" title="Pengaturan Denda" icon={IconSettingsExclamation} />
+            <NavLink
+                url={route('admin.publishers.index')}
+                active={url.startsWith('/admin/publishers')}
+                title="Penerbit"
+                icon={IconBuildingCommunity}
+            />
+            <NavLink
+                url={route('admin.books.index')}
+                active={url.startsWith('/admin/books')}
+                title="Buku"
+                icon={IconBooks}
+            />
+            <NavLink url={route('admin.users.index')}
+                                    active={url.startsWith('/admin/users')}
+                                    title="Pengguna"
+                                    icon={IconUsersGroup} />
+            <NavLink url={route('admin.fine-settings.create')}
+                        active={url.startsWith('/admin/fine-settings')}
+                        title="Pengaturan Denda"
+                        icon={IconSettingsExclamation} />
 
             <div className="px-3 py-2 text-sm font-semibold text-foreground">Peran dan Izin</div>
             <NavLink href="#" title="Peran" icon={IconCircleKey} />
@@ -60,8 +74,10 @@ export default function Sidebar({ url, auth }) {
             <NavLink href="#" title="Akses Rute" icon={IconRoute} />
 
             <div className="px-3 py-2 text-sm font-semibold text-foreground">Transaksi</div>
-            <NavLink href="#" title="Peminjaman" icon={IconCreditCardPay} />
-            <NavLink href="#" title="Pengembalian" icon={IconCreditCardRefund} />
+            <NavLink url={route('admin.loans.index')}
+                                    active={url.startsWith('/admin/loans')} title="Peminjaman" icon={IconCreditCardPay} />
+            <NavLink url={route('admin.return-books.index')}
+                                    active={url.startsWith('/admin/return-book')} title="Pengembalian" icon={IconCreditCardRefund} />
 
             <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
             <NavLink href="#" title="Pengumuman" icon={IconAlertCircle} />

@@ -248,7 +248,6 @@ export default function Edit(props) {
                             </Select>
                             {errors.publisher_id && <InputError message={errors.publisher_id} />}
                         </div>
-                        
 
                         <div className="flex justify-end gap-2">
                             <Button type="button" variant="ghost" size="lg" onClick={onHandleReset}>

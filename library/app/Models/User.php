@@ -6,9 +6,11 @@ namespace App\Models;
 
 use App\Enums\UserGender;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -18,16 +20,16 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
-        'username',
+        'gender',
         'phone',
         'avatar',
-        'gender',
         'date_of_birth',
         'address',
     ];
@@ -35,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -52,7 +54,30 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'gender' => UserGender::class
+            'gender' => UserGender::class,
+            'date_of_birth' => 'date',
         ];
+    }
+
+    public function scopeFilter(Builder $query, array $filters): void
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereAny([
+                    'name',
+                    'username',
+                    'email',
+                    'phone',
+                    'gender',
+                ], 'REGEXP', $search);
+            });
+        });
+    }
+
+    public function scopeSorting(Builder $query, array $sorts): void
+    {
+        $query->when($sorts['field'] ?? null && $sorts['direction'] ?? null, function ($query) use ($sorts) {
+            $query->orderBy($sorts['field'], $sorts['direction']);
+        });
     }
 }
