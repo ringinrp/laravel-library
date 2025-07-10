@@ -80,7 +80,9 @@ export default function Sidebar({ url, auth }) {
                                     active={url.startsWith('/admin/return-book')} title="Pengembalian" icon={IconCreditCardRefund} />
 
             <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
-            <NavLink href="#" title="Pengumuman" icon={IconAlertCircle} />
+            <NavLink url={route('admin.announcements.index')}
+                                    active={url.startsWith('/admin/announcements')}
+                                    title="Pengumuman" icon={IconAlertCircle} />
             <NavLink href={route('profile.edit')} title="Profile" icon={IconUser} />
             <NavLink
                 url={route('logout')}
