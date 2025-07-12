@@ -213,22 +213,22 @@ export default function Index(props) {
                                     <TableCell>{return_book.return_book_check}</TableCell>
                                     <TableCell>{return_book.created_at}</TableCell>
                                     <TableCell>
-                                                                            <div className="flex items-center gap-x-1">
-                                                                                {return_book.fine && (
-                                                                                    <Button variant="blue" size="sm" asChild>
-                                                                                        <Link href={route('admin.fines.create', [return_book])}>
-                                                                                            <IconEye className="size-4" />
-                                                                                        </Link>
-                                                                                    </Button>
-                                                                                )}
-                                                                                {return_book.status === 'Pengecekan' && (
-                                                                                    <Approve
-                                                                                        conditions={props.conditions}
-                                                                                        action={route('admin.return-books.approve', [return_book])}
-                                                                                    />
-                                                                                )}
-                                                                            </div>
-                                                                        </TableCell>
+                                        <div className="flex items-center gap-x-1">
+                                            {return_book.fine && (
+                                                <Button variant="blue" size="sm" asChild>
+                                                    <Link href={route('admin.fines.create', [return_book])}>
+                                                        <IconEye className="size-4" />
+                                                    </Link>
+                                                </Button>
+                                            )}
+                                            {return_book.status === 'Pengecekan' && (
+                                                <Approve
+                                                    conditions={props.conditions}
+                                                    action={route('admin.return-books.approve', [return_book])}
+                                                />
+                                            )}
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
