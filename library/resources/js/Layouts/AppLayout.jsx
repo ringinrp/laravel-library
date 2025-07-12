@@ -23,6 +23,8 @@ export default function AppLayout({ title, children }) {
     const auth = usePage().props.auth.user;
     const { url } = usePage();
     const announcement = usePage().props.announcement;
+
+    console.log(announcement);
     return (
         <>
             <Head title={title} />
@@ -34,7 +36,7 @@ export default function AppLayout({ title, children }) {
                     <div className="flex h-full min-h-screen flex-col gap-2">
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                             <ApplicationLogo />
-                            <ThemeSwitcher />
+                            {/* <ThemeSwitcher /> */}
                         </div>
                         <div className="flex-1">
                             {/* sidebar */}
@@ -107,9 +109,13 @@ export default function AppLayout({ title, children }) {
                             </div>
                             <div className="gap-4 p-4 lg:gap-6">
                                 {children}
-                                {announcement && announcement.is_active == 1 && (
-                                    <Banner message={announcement.message} url={announcement.url} />
-                                )}
+
+                                {announcement &&
+                                    announcement.is_active === 1 &&
+                                    announcement.message &&
+                                    announcement.url && (
+                                        <Banner message={announcement.message} url={announcement.url} />
+                                    )}
                             </div>
                         </div>
                     </main>
