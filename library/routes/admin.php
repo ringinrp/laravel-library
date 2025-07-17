@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\ReturnBookController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
 
@@ -71,7 +72,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::get('fines/{returnBook:return_book_code}/create', 'create')->name('admin.fines.create');
     });
 
-    Route::controller(AnnouncementController::class)->group(function(){
+    Route::controller(AnnouncementController::class)->group(function () {
         Route::get('announcements', 'index')->name('admin.announcements.index');
         Route::get('announcements/create', 'create')->name('admin.announcements.create');
         Route::post('announcements/create', 'store')->name('admin.announcements.store');
@@ -80,14 +81,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::delete('announcements/destroy/{announcement}', 'destroy')->name('admin.announcements.destroy');
     });
 
-    // Route::controller(RoleController::class)->group(function(){
-    //     Route::get('roles', 'index')->name('admin.roles.index');
-    //     Route::get('roles/create', 'create')->name('admin.roles.create');
-    //     Route::post('roles/create', 'store')->name('admin.roles.store');
-    //     Route::get('roles/edit/{role}', 'edit')->name('admin.roles.edit');
-    //     Route::put('roles/edit/{role}', 'update')->name('admin.roles.update');
-    //     Route::delete('roles/destroy/{role}', 'destroy')->name('admin.roles.destroy');
-    // });
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('roles', 'index')->name('admin.roles.index');
+        Route::get('roles/create', 'create')->name('admin.roles.create');
+        Route::post('roles/create', 'store')->name('admin.roles.store');
+        Route::get('roles/edit/{role}', 'edit')->name('admin.roles.edit');
+        Route::put('roles/edit/{role}', 'update')->name('admin.roles.update');
+        Route::delete('roles/destroy/{role}', 'destroy')->name('admin.roles.destroy');
+    });
 
     // Route::controller(PermissionController::class)->group(function(){
     //     Route::get('permissions', 'index')->name('admin.permissions.index');
