@@ -21,7 +21,7 @@ class PermissionController extends Controller
             ->when(request()->search, function ($query, $search) {
                 $query->whereAny([
                     'name',
-                    'guard_name'
+                    'guard_name',
                 ], 'REGEXP', $search);
             })
             ->when(request()->field && request()->direction, fn($query) => $query->orderBy(request()->field, request()->direction))
@@ -31,7 +31,7 @@ class PermissionController extends Controller
         return inertia('Admin/Permissions/Index', [
             'page_settings' => [
                 'title' => 'Izin',
-                'subtitle' => 'Menampilkan semua data izin yang tersedia.',
+                'subtitle' => 'Menampilkan semua data izin yang tersedia pada platform ini. '
             ],
             'permissions' => PermissionResource::collection($permissions)->additional([
                 'meta' => [
@@ -40,18 +40,18 @@ class PermissionController extends Controller
             ]),
             'state' => [
                 'page' => request()->page ?? 1,
-                'search' => request()->search ?? '',
-                'load' => 10,
+                'search'  => request()->search ?? '',
+                'load'  => 10,
             ],
         ]);
     }
 
-    public function create(): Response
+    public function create(Permission $permission): Response
     {
         return inertia('Admin/Permissions/Create', [
             'page_settings' => [
                 'title' => 'Tambah Izin',
-                'subtitle' => 'Tambahkan izin baru disini. Klik simpan setelah selesai.',
+                'subtitle' => 'Tambah izin baru disini. Klik simpan setelah selesai',
                 'method' => 'POST',
                 'action' => route('admin.permissions.store'),
             ],
@@ -65,20 +65,21 @@ class PermissionController extends Controller
                 'name' => $request->name,
                 'guard_name' => $request->guard_name ?? 'web',
             ]);
-            flashMessage(MessageType::CREATED->message('Izin'));
-            return to_route('admin.permissions.index');
 
-        } catch (Throwable $e) {
-            flashMessage(MessageType::ERROR->message(error: $e->getMessage()));
+            flashMessage(MessageType::CREATED->message('izin'));
+            return to_route('admin.permissions.index');
+        } catch (Throwable $err) {
+            flashMessage(MessageType::ERROR->message($err->getMessage()), 'error');
             return to_route('admin.permissions.index');
         }
     }
+
     public function edit(Permission $permission): Response
     {
         return inertia('Admin/Permissions/Edit', [
             'page_settings' => [
                 'title' => 'Edit Izin',
-                'subtitle' => 'Edit izin baru disini. Klik simpan setelah selesai.',
+                'subtitle' => 'Edit izin disini. Klik simpan setelah selesai',
                 'method' => 'PUT',
                 'action' => route('admin.permissions.update', $permission),
             ],
@@ -93,14 +94,15 @@ class PermissionController extends Controller
                 'name' => $request->name,
                 'guard_name' => $request->guard_name ?? 'web',
             ]);
+
             flashMessage(MessageType::UPDATED->message('izin'));
             return to_route('admin.permissions.index');
-
-        } catch (Throwable $e) {
-            flashMessage(MessageType::ERROR->message(error: $e->getMessage()));
+        } catch (Throwable $err) {
+            flashMessage(MessageType::ERROR->message($err->getMessage()), 'error');
             return to_route('admin.permissions.index');
         }
     }
+
     public function destroy(Permission $permission): RedirectResponse
     {
         try {
@@ -108,9 +110,8 @@ class PermissionController extends Controller
 
             flashMessage(MessageType::DELETED->message('Izin'));
             return to_route('admin.permissions.index');
-
-        } catch (Throwable $e) {
-            flashMessage(MessageType::ERROR->message(error: $e->getMessage()));
+        } catch (Throwable $err) {
+            flashMessage(MessageType::ERROR->message($err->getMessage()), 'error');
             return to_route('admin.permissions.index');
         }
     }

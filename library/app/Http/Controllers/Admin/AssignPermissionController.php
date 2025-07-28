@@ -30,7 +30,7 @@ class AssignPermissionController extends Controller
         return inertia('Admin/AssignPermissions/Index', [
             'page_settings' => [
                 'title' => 'Tetapkan Izin',
-                'subtitle' => 'Menampilkan semua data tetapkan izin yang tersedia pada platform ini. '
+                'subtitle' => 'Menampilkan semua data tetapkan izin yang tersimpan pada platform ini. '
             ],
             'roles' => AssignPermissionResource::collection($roles)->additional([
                 'meta' => [
@@ -65,9 +65,10 @@ class AssignPermissionController extends Controller
     public function update(Role $role, AssignPermissionRequest $request): RedirectResponse
     {
         try {
+            // Menggunakan 'syncPermissions' untuk menyinkronkan izin dengan role
             $role->syncPermissions($request->permissions);
 
-            flashMessage("Berhasil sinkronisasi izin ke peran {$role->name}");
+            flashMessage(MessageType::UPDATED->message('izin'));
             return to_route('admin.assign-permissions.index');
         } catch (Throwable $err) {
             flashMessage(MessageType::ERROR->message($err->getMessage()), 'error');
