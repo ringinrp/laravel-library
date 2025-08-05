@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Admin;
 
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,14 +25,13 @@ class PermissionRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string',
                 'min:3',
                 'max:255',
                 Rule::unique('permissions')->ignore($this->permission),
             ],
             'guard_name' => [
                 'nullable',
-                'in:web,api',
+                'in:web,api'
             ],
         ];
     }
