@@ -40,7 +40,8 @@ export default function SidebarResponsive({ url, auth }) {
 
                 <NavLinkResponsive url={route('admin.loan-statistics.index')}
                         active={url.startsWith('/admin/loan-statistics')}  title="Statistik Peminjaman" icon={IconChartDots2} />
-                <NavLinkResponsive href="#" title="Laporan Denda" icon={IconMoneybag} />
+                <NavLinkResponsive url={route('admin.fine-reports.index')}
+                        active={url.startsWith('/admin/fine-reports')} title="Laporan Denda" icon={IconMoneybag} />
                 <NavLinkResponsive href="#" title="Laporan Stok Buku" icon={IconStack3} />
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Master</div>

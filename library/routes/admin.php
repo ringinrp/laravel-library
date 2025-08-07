@@ -16,12 +16,17 @@ use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RouteAccessController;
+use App\Http\Controllers\Admin\FineReportController;
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::controller(LoanStatisticController::class)->group(function () {
         Route::get('loan-statistics', 'index')->name('admin.loan-statistics.index');
     });
+    Route::controller(FineReportController::class)->group(function () {
+        Route::get('fine-reports', 'index')->name('admin.fine-reports.index');
+    });
+
 
     Route::controller(CategoryController::class)->group(function () {
         Route::get('categories', 'index')->name('admin.categories.index');
