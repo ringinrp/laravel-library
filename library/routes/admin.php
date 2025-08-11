@@ -4,29 +4,30 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AssignPermissionController;
 use App\Http\Controllers\Admin\AssignUserController;
 use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\BookStockReportController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FineController;
+use App\Http\Controllers\Admin\FineReportController;
 use App\Http\Controllers\Admin\FineSettingController;
 use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\LoanStatisticController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\ReturnBookController;
-use App\Http\Controllers\Admin\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RouteAccessController;
-use App\Http\Controllers\Admin\FineReportController;
+use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->group(function () {
 
     Route::controller(LoanStatisticController::class)->group(function () {
         Route::get('loan-statistics', 'index')->name('admin.loan-statistics.index');
     });
+
     Route::controller(FineReportController::class)->group(function () {
         Route::get('fine-reports', 'index')->name('admin.fine-reports.index');
     });
-
 
     Route::controller(CategoryController::class)->group(function () {
         Route::get('categories', 'index')->name('admin.categories.index');
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('publishers/edit/{publisher}', 'update')->name('admin.publishers.update');
         Route::delete('publishers/destroy/{publisher}', 'destroy')->name('admin.publishers.destroy');
     });
+
     Route::controller(BookController::class)->group(function () {
         Route::get('books', 'index')->name('admin.books.index');
         Route::get('books/create', 'create')->name('admin.books.create');
@@ -53,6 +55,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('books/edit/{book}', 'update')->name('admin.books.update');
         Route::delete('books/destroy/{book}', 'destroy')->name('admin.books.destroy');
     });
+
     Route::controller(UserController::class)->group(function () {
         Route::get('users', 'index')->name('admin.users.index');
         Route::get('users/create', 'create')->name('admin.users.create');
@@ -61,6 +64,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('users/edit/{user}', 'update')->name('admin.users.update');
         Route::delete('users/destroy/{user}', 'destroy')->name('admin.users.destroy');
     });
+
     Route::controller(FineSettingController::class)->group(function () {
         Route::get('fine-settings/create', 'create')->name('admin.fine-settings.create');
         Route::put('fine-settings/create', 'store')->name('admin.fine-settings.store');
