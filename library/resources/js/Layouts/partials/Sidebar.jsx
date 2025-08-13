@@ -38,7 +38,7 @@ export default function Sidebar({ url, auth }) {
                         active={url.startsWith('/admin/loan-statistics')} title="Statistik Peminjaman" icon={IconChartDots2} />
             <NavLink url={route('admin.fine-reports.index')}
                         active={url.startsWith('/admin/fine-reports')} title="Laporan Denda" icon={IconMoneybag} />
-            <NavLink href="#" title="Laporan Stok Buku" icon={IconStack3} />
+            <NavLink url={route('admin.book-stock-reports.index')} active={url.startsWith('/admin/book-stock-reports')} title="Laporan Stok Buku" icon={IconStack3} />
 
             <div className="px-3 py-2 text-sm font-semibold text-foreground">Master</div>
             <NavLink

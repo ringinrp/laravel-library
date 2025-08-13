@@ -28,6 +28,11 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->group(funct
     Route::controller(FineReportController::class)->group(function () {
         Route::get('fine-reports', 'index')->name('admin.fine-reports.index');
     });
+    Route::controller(BookStockReportController::class)->group(function () {
+        Route::get('book-stock-reports', 'index')->name('admin.book-stock-reports.index');
+        Route::get('book-stock-reports/edit/{book-stock}', 'edit')->name('admin.book-stock-reports.edit');
+        Route::put('book-stock-reports/edit/{book-stock}', 'update')->name('admin.book-stock-reports.update');
+    });
 
     Route::controller(CategoryController::class)->group(function () {
         Route::get('categories', 'index')->name('admin.categories.index');
