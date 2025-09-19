@@ -60,7 +60,7 @@ export default function Index(props) {
                 </CardStat>
             </div>
 
-           <h2 className="font-semibold leading-relaxed text-foreground">Peminjaman Per Buku</h2>
+            <h2 className="font-semibold leading-relaxed text-foreground">Peminjaman Per Buku</h2>
             <div className="flex w-full flex-col justify-between gap-8 lg:flex-row">
                 <Card className="w-full lg:w-1/2">
                     <CardHeader>

@@ -8,12 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
-import { IconArrowLeft, IconCircleKey, IconVersions } from '@tabler/icons-react';
+import { IconArrowLeft, IconVersions } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
     const { data, setData, reset, post, processing, errors } = useForm({
-        name: props.permission.name ??'',
+        name: props.permission.name ?? '',
         guard_name: props.permission.guard_name ?? 'web',
         _method: props.page_settings.method,
     });

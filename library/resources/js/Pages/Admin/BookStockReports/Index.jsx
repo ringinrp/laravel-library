@@ -1,14 +1,4 @@
 import HeaderTitle from '@/Components/HeaderTitle';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTrigger,
-} from '@/Components/ui/alert-dialog';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -16,16 +6,13 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import { UseFilter } from '@/hooks/UseFilter';
-import AppLayout from '@/Layouts/AppLayout';
-import { flashMessage } from '@/lib/utils';
-import { Link, router } from '@inertiajs/react';
-import { AlertDialogTitle } from '@radix-ui/react-alert-dialog';
-import { IconArrowsDownUp, IconPencil, IconPlus, IconRefresh, IconTrash, IconVersions } from '@tabler/icons-react';
+import AppLayout from '@/Layouts/AppLayout'; // Adjust the path as needed
+import { Link } from '@inertiajs/react';
+import { IconArrowsDownUp, IconPencil, IconRefresh, IconStack3 } from '@tabler/icons-react';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 export default function Index(props) {
-    const { data: permissions, meta } = props.permissions;
+    const { data: stocks, meta } = props.stocks;
     const [params, setParams] = useState(props.state);
 
     const onSortable = (field) => {
@@ -37,35 +24,29 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.permissions.index'),
+        route: route('admin.book-stock-reports.index'),
         values: params,
-        only: ['permissions'],
+        only: ['stocks'],
     });
 
     return (
-        <div className="flex w-full flex-col pb-32">
-            <div className="mb-8 flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
+        <div className="flex flex-col w-full pb-32">
+            <div className="flex flex-col items-center justify-between mb-8 gap-y-4 lg:flex-row lg:items-center">
                 <HeaderTitle
                     title={props.page_settings.title}
-                    subTitle={props.page_settings.subtitle}
-                    icon={IconVersions}
+                    subtitle={props.page_settings.subtitle}
+                    icon={IconStack3}
                 />
-                <Button variant="orange" size="lg" asChild>
-                    <Link href={route('admin.permissions.create')}>
-                        <IconPlus className="size-4" />
-                        Tambah
-                    </Link>
-                </Button>
             </div>
 
-            <Card>
+            <Card className="px-0 py-0 [&-td]:whitespace-nowrap [&_td]:px-6 [&_th]:px-6">
                 <CardHeader>
                     <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-center">
                         <Input
                             className="w-full sm:w-1/4"
                             placeholder="Search..."
                             value={params?.search}
-                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value }))}
+                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value, page: 1 }))}
                         />
                         <Select value={params?.load} onValueChange={(e) => setParams({ ...params, load: e })}>
                             <SelectTrigger className="w-full sm:w-24">
@@ -79,13 +60,13 @@ export default function Index(props) {
                                 ))}
                             </SelectContent>
                         </Select>
-                        <Button variant="red" onClick={() => setParams(props.state)} size="xl">
-                            <IconRefresh className="size-4" />
-                            Bersihkan
+                        <Button variant="orange" onClick={() => setParams(props.state)} size="xl">
+                            <IconRefresh />
+                            Reload
                         </Button>
                     </div>
                 </CardHeader>
-                <CardContent className="px-0 py-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
+                <CardContent>
                     <Table className="w-full">
                         <TableHeader>
                             <TableRow>
@@ -105,9 +86,9 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('name')}
+                                        onClick={() => onSortable('book_id')}
                                     >
-                                        Nama
+                                        Buku
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -117,14 +98,67 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('guard_name')}
+                                        onClick={() => onSortable('total')}
                                     >
-                                        Guard
+                                        Total
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
                                     </Button>
                                 </TableHead>
+
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('available')}
+                                    >
+                                        Tersedia
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('loan')}
+                                    >
+                                        Dipinjam
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('lost')}
+                                    >
+                                        Hilang
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('damaged')}
+                                    >
+                                        Rusak
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+
                                 <TableHead>
                                     <Button
                                         variant="ghost"
@@ -141,58 +175,27 @@ export default function Index(props) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {permissions.map((permission, index) => (
+                            {stocks.map((stock, index) => (
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                    <TableCell>{permission.name}</TableCell>
-                                    <TableCell>{permission.guard_name}</TableCell>
-                                    <TableCell>{permission.created_at}</TableCell>
+                                    <TableCell>{stock.book.title}</TableCell>
+                                    <TableCell>{stock.total}</TableCell>
+                                    <TableCell>{stock.available}</TableCell>
+                                    <TableCell>{stock.loan}</TableCell>
+                                    <TableCell>{stock.lost}</TableCell>
+                                    <TableCell>{stock.damaged}</TableCell>
+
+                                    <TableCell>{stock.created_at}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-x-1">
                                             <Button variant="blue" size="sm" asChild>
-                                                <Link href={route('admin.permissions.edit', [permission])}>
+                                                <Link
+                                                    href={route('admin.book-stock-reports.edit', stock.id)}
+                                                    preserveState={false}
+                                                >
                                                     <IconPencil className="size-4" />
                                                 </Link>
                                             </Button>
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button variant="red" size="sm">
-                                                        <IconTrash className="size-4" />
-                                                    </Button>
-                                                </AlertDialogTrigger>
-                                                <AlertDialogContent>
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>
-                                                            Apakah anda benar-benar yakin?
-                                                        </AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                            Tindakan ini tidak dapat dibatalkan. Tindakan ini akan
-                                                            menghapus data secara permanen dan menghapus data anda dari
-                                                            server kami
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction
-                                                            onClick={() =>
-                                                                router.delete(
-                                                                    route('admin.permissions.destroy', [permission]),
-                                                                    {
-                                                                        preserveScroll: true,
-                                                                        preserveState: true,
-                                                                        onSuccess: (success) => {
-                                                                            const flash = flashMessage(success);
-                                                                            if (flash) toast[flash.type](flash.message);
-                                                                        },
-                                                                    },
-                                                                )
-                                                            }
-                                                        >
-                                                            Continue
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -200,17 +203,17 @@ export default function Index(props) {
                         </TableBody>
                     </Table>
                 </CardContent>
-                <CardFooter className="flex w-full flex-col items-center justify-between border-t py-2 lg:flex-row">
+                <CardFooter className="flex flex-col items-center justify-between w-full py-2 border-t lg:flex-row">
                     <p className="mb-2 text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-orange-500">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} izin
+                        {meta.total} stok buku
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && (
                             <Pagination>
                                 <PaginationContent className="flex flex-wrap justify-center lg:justify-end">
                                     {meta.links.map((link, index) => (
-                                        <PaginationItem key={index} className="lb:mb-0 mx-1 mb-1">
+                                        <PaginationItem key={index} className="mx-1 mb-1 lb:mb-0">
                                             <PaginationLink href={link.url} isActive={link.active}>
                                                 {link.label}
                                             </PaginationLink>
